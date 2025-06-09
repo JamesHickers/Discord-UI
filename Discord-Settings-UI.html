@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Discord-Inspired Settings UI</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: sans-serif;
+      background-color: #2f3136;
+      color: #dcddde;
+      display: flex;
+      height: 100vh;
+    }
+    .sidebar {
+      width: 240px;
+      background-color: #202225;
+      padding: 16px;
+      overflow-y: auto;
+    }
+    .sidebar-search {
+      margin-bottom: 12px;
+    }
+    .sidebar-search input {
+      width: 100%;
+      padding: 8px;
+      border-radius: 4px;
+      border: none;
+      background-color: #2f3136;
+      color: white;
+    }
+    .sidebar h2 {
+      color: #ffffff;
+      font-size: 14px;
+      margin-top: 20px;
+      margin-bottom: 12px;
+    }
+    .sidebar ul {
+      list-style: none;
+    }
+    .sidebar li {
+      padding: 10px 12px;
+      border-radius: 4px;
+      margin-bottom: 6px;
+      cursor: pointer;
+    }
+    .sidebar li:hover {
+      background-color: #36393f;
+    }
+    .main-panel {
+      flex-grow: 1;
+      padding: 24px;
+      overflow-y: auto;
+    }
+    .panel-section {
+      background-color: #36393f;
+      padding: 20px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      display: none;
+    }
+    .panel-section.active {
+      display: block;
+    }
+    .panel-section h3 {
+      color: #ffffff;
+      margin-bottom: 10px;
+    }
+    .panel-section label {
+      display: block;
+      margin-top: 10px;
+    }
+    .panel-section input[type="text"],
+    .panel-section input[type="password"],
+    .panel-section select,
+    .panel-section textarea {
+      width: 100%;
+      padding: 8px;
+      background-color: #202225;
+      color: #ffffff;
+      border: none;
+      border-radius: 4px;
+      margin-top: 4px;
+    }
+    .panel-section button {
+      margin-top: 8px;
+      background-color: #7289da;
+      color: white;
+      padding: 6px 12px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    .panel-section button:hover {
+      background-color: #5b6eae;
+    }
+    .section-divider {
+      border-top: 1px solid #4f545c;
+      margin: 20px 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="sidebar">
+    <div class="sidebar-search">
+      <input type="text" placeholder="Search Settings..." />
+    </div>
+    <h2>User Settings</h2>
+    <ul>
+      <li onclick="switchPanel('nitro')">Get Nitro</li>
+      <li onclick="switchPanel('account')">My Account</li>
+      <li onclick="switchPanel('authorized-apps')">Authorized Apps</li>
+      <li onclick="switchPanel('devices')">Devices</li>
+      <li onclick="switchPanel('clips')">Clips</li>
+      <li onclick="switchPanel('qr-scan')">Scan QR Code</li>
+    </ul>
+
+    <h2>Billing Settings</h2>
+    <ul>
+      <li onclick="switchPanel('billing')">Billing</li>
+      <li onclick="switchPanel('quests')">Quests</li>
+      <li onclick="switchPanel('server-boost')">Server Boost</li>
+      <li onclick="switchPanel('nitro-gifting')">Nitro Gifting</li>
+    </ul>
+
+    <h2>App Settings</h2>
+    <ul>
+      <li onclick="switchPanel('voice')">Voice & Video</li>
+      <li onclick="switchPanel('appearance')">Appearance</li>
+      <li onclick="switchPanel('accessibility')">Accessibility</li>
+      <li onclick="switchPanel('language')">Language</li>
+      <li onclick="switchPanel('chat')">Chat</li>
+      <li onclick="switchPanel('web-browser')">Web Browser</li>
+      <li onclick="switchPanel('notifications')">Notifications</li>
+      <li onclick="switchPanel('advanced')">Advanced</li>
+    </ul>
+
+    <h2>Help & Support</h2>
+    <ul>
+      <li onclick="switchPanel('support')">Support</li>
+      <li onclick="switchPanel('acknowledgements')">Acknowledgements</li>
+      <li onclick="switchPanel('whats-new')">What's New</li>
+    </ul>
+
+    <h2>Debug</h2>
+    <ul>
+      <li onclick="switchPanel('app-version')">App Version</li>
+      <li onclick="switchPanel('device-info')">Device Info</li>
+      <li onclick="switchPanel('client-info')">Client Info</li>
+      <li onclick="switchPanel('logs')">Logs</li>
+      <li onclick="switchPanel('cache-actions')">Cache Actions</li>
+    </ul>
+
+    <h2>Account</h2>
+    <ul>
+      <li onclick="switchPanel('logout')">Log Out</li>
+    </ul>
+  </div>
+  <div class="main-panel" id="mainPanel">
+    <div class="panel-section active" id="account">
+      <h3>My Account</h3>
+      <label>Username
+        <input type="text" placeholder="YourUsername" />
+      </label>
+      <label>Email
+        <input type="text" placeholder="you@example.com" />
+      </label>
+      <label>Phone Number
+        <input type="text" placeholder="+1234567890" />
+      </label>
+      <label>New Password
+        <input type="password" placeholder="New password" />
+      </label>
+      <label>Confirm Password
+        <input type="password" placeholder="Confirm new password" />
+      </label>
+      <label>About Me
+        <textarea placeholder="Tell us something cool..."></textarea>
+      </label>
+      <div>
+        <h4 style="margin-top: 16px;">Avatar</h4>
+        <button onclick="alert('Upload Avatar clicked')">Upload Avatar</button>
+        <button onclick="alert('Avatar removed')">Remove Avatar</button>
+      </div>
+      <div class="section-divider"></div>
+      <h3>Security Settings</h3>
+      <label><input type="checkbox" /> Enable 2FA</label>
+      <label><input type="checkbox" /> Enable MFA (Multi-Factor Auth)</label>
+      <label><input type="checkbox" /> Use Passkey</label>
+      <label>
+        Backup Codes
+        <button onclick="alert('Viewing backup codes')">View Codes</button>
+      </label>
+    </div>
+
+    <div class="panel-section" id="app-version">
+      <h3>🌟 Discord - App Version</h3>
+      <p>Stable 190784 (d61b92e)</p>
+    </div>
+    <div class="panel-section" id="cache-actions">
+      <h3>Cache Actions</h3>
+      <button>Write Cache</button>
+      <button>Clear Cache</button>
+    </div>
+  </div>
+  <script>
+    function switchPanel(panelId) {
+      const sections = document.querySelectorAll('.panel-section');
+      sections.forEach(sec => sec.classList.remove('active'));
+      const target = document.getElementById(panelId);
+      if (target) {
+        target.classList.add('active');
+      } else {
+        console.warn(`Panel with id '${panelId}' not found.`);
+      }
+    }
+  </script>
+</body>
+</html>
