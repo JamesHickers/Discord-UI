@@ -103,6 +103,15 @@
       border-top: 1px solid #4f545c;
       margin: 20px 0;
     }
+    .avatar-preview {
+      margin-top: 10px;
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      background-color: #202225;
+      background-size: cover;
+      background-position: center;
+    }
   </style>
 </head>
 <body>
@@ -184,11 +193,13 @@
       </label>
       <div>
         <h4 style="margin-top: 16px;">Avatar</h4>
-        <button onclick="alert('Upload Avatar clicked')">Upload Avatar</button>
-        <button onclick="alert('Avatar removed')">Remove Avatar</button>
+        <div id="avatarPreview" class="avatar-preview"></div>
+        <input type="file" id="avatarInput" accept="image/*" onchange="previewAvatar(event)" style="margin-top: 10px;" />
+        <button onclick="document.getElementById('avatarInput').click()">Upload Avatar</button>
+        <button onclick="removeAvatar()">Remove Avatar</button>
       </div>
       <div class="section-divider"></div>
-      <h3>Security Settings</h3>
+      <h3>Security</h3>
       <label><input type="checkbox" /> Enable 2FA</label>
       <label><input type="checkbox" /> Enable MFA (Multi-Factor Auth)</label>
       <label><input type="checkbox" /> Use Passkey</label>
@@ -196,6 +207,9 @@
         Backup Codes
         <button onclick="alert('Viewing backup codes')">View Codes</button>
       </label>
+      <div class="section-divider"></div>
+      <h3>Standing</h3>
+      <p>Your current account standing is good.</p>
     </div>
 
     <div class="panel-section" id="app-version">
@@ -219,6 +233,24 @@
         console.warn(`Panel with id '${panelId}' not found.`);
       }
     }
+
+    function previewAvatar(event) {
+      const file = event.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          document.getElementById('avatarPreview').style.backgroundImage = `url('${e.target.result}')`;
+        };
+        reader.readAsDataURL(file);
+      }
+    }
+
+    function removeAvatar() {
+      document.getElementById('avatarPreview').style.backgroundImage = '';
+      document.getElementById('avatarInput').value = '';
+    }
+
+    switchPanel('app-version');
   </script>
 </body>
 </html>
